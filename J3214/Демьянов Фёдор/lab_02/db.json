@@ -489,6 +489,48 @@
       "totalPrice": 14000000,
       "serialNo": "9940-2026-NT-EXP06",
       "active": true
+    },
+    {
+      "userId": 2,
+      "tourId": "enceladus",
+      "tourCode": "EXP-06",
+      "route": "Земля → Гейзеры",
+      "origin": "EAR",
+      "originName": "Земля (КК)",
+      "destination": "ENCELADUS",
+      "destinationName": "Гейзеры Энцелада",
+      "date": "10 августа 2028",
+      "countdown": "30 дн. 10:00",
+      "ship": "Titan Horizon Titan-Class",
+      "gate": "Gateway A-12",
+      "cabin": "Каюта 1-й категории",
+      "status": "Ожидает старта",
+      "statusBadge": "badge-gold",
+      "totalPrice": 14200000,
+      "serialNo": "NT-5111-2026-EXP06SATURN",
+      "active": true,
+      "id": 4
+    },
+    {
+      "userId": 2,
+      "tourId": "earth-polar",
+      "tourCode": "EXP-05",
+      "route": "Земля → Полярная",
+      "origin": "EAR",
+      "originName": "Земля (КК)",
+      "destination": "EARTH",
+      "destinationName": "Полярная одиссея",
+      "date": "12 января 2027",
+      "countdown": "30 дн. 10:00",
+      "ship": "Aurora Polar Cruiser",
+      "gate": "Gateway A-12",
+      "cabin": "Каюта 1-й категории",
+      "status": "Ожидает старта",
+      "statusBadge": "badge-gold",
+      "totalPrice": 750000,
+      "serialNo": "NT-7161-2026-EXP05ORB",
+      "active": true,
+      "id": 5
     }
   ]
 }
