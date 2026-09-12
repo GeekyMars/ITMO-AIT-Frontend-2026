@@ -83,20 +83,44 @@
         </div>
     </main>
 
-    <!-- Скрипт клиентской валидации Bootstrap 5 -->
+    <!-- Подключаем сетевой клиент и модуль авторизации -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const form = document.getElementById('loginForm');
+            // Если сессия уже активна - сразу переходим в кабинет
+            if (window.auth.getCurrentUser()) {
+                window.location.href = 'dashboard.html';
+                return;
+            }
 
-            form.addEventListener('submit', (event) => {
+            const form = document.getElementById('loginForm');
+            const emailInput = document.getElementById('email');
+            const passwordInput = document.getElementById('password');
+
+            form.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 event.stopPropagation();
 
-                if (form.checkValidity()) {
-                    // Имитация успешной авторизации и переход в кабинет
-                    window.location.href = 'dashboard.html';
-                } else {
+                if (!form.checkValidity()) {
                     form.classList.add('was-validated');
+                    return;
+                }
+
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Авторизация...';
+
+                try {
+                    await window.auth.login(emailInput.value.trim(), passwordInput.value);
+                    window.location.href = 'dashboard.html';
+                } catch (error) {
+                    alert(error.message);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
                 }
             });
         });

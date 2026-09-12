@@ -91,38 +91,63 @@
         </div>
     </main>
 
-    <!-- Скрипт проверки валидации и совпадения паролей -->
+    <!-- Подключаем сетевой клиент и модуль авторизации -->
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            if (window.auth.getCurrentUser()) {
+                window.location.href = 'dashboard.html';
+                return;
+            }
+
             const form = document.getElementById('registerForm');
-            const pass = document.getElementById('password');
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+            const passInput = document.getElementById('password');
             const passConfirm = document.getElementById('passwordConfirm');
             const confirmFeedback = document.getElementById('confirmFeedback');
 
-            form.addEventListener('submit', (event) => {
+            passConfirm.addEventListener('input', () => {
+                if (passInput.value === passConfirm.value) {
+                    passConfirm.setCustomValidity('');
+                }
+            });
+
+            form.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 event.stopPropagation();
 
-                // Проверка совпадения паролей
-                if (pass.value !== passConfirm.value) {
+                if (passInput.value !== passConfirm.value) {
                     passConfirm.setCustomValidity('Пароли не совпадают');
                     confirmFeedback.textContent = 'Введенные ключи доступа не совпадают.';
                 } else {
                     passConfirm.setCustomValidity('');
                 }
 
-                if (form.checkValidity()) {
-                    // Успешная регистрация и перенаправление в личный кабинет
-                    window.location.href = 'dashboard.html';
-                } else {
+                if (!form.checkValidity()) {
                     form.classList.add('was-validated');
+                    return;
                 }
-            });
 
-            // Сброс ошибки при вводе в поле подтверждения
-            passConfirm.addEventListener('input', () => {
-                if (pass.value === passConfirm.value) {
-                    passConfirm.setCustomValidity('');
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalBtnText = submitBtn.textContent;
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Регистрация...';
+
+                try {
+                    await window.auth.register(
+                        nameInput.value.trim(),
+                        emailInput.value.trim(),
+                        passInput.value
+                    );
+                    window.location.href = 'dashboard.html';
+                } catch (error) {
+                    alert(error.message);
+                } finally {
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = originalBtnText;
                 }
             });
         });
