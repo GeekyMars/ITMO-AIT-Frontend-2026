@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', async () => {
     // Проверка авторизации (Route Guard)
+
     const currentUser = window.auth.requireAuth();
     if (!currentUser) return;
 
@@ -9,23 +10,25 @@ document.addEventListener('DOMContentLoaded', async () => {
         user = await window.api.get(`/users/${currentUser.id}`);
         window.auth.setCurrentUser(user);
     } catch (e) {
-        console.warn('Не удалось обновить профиль с сервера, используем локальную сессию');
+        console.warn('Работаем с кэшированной сессией');
     }
 
-    // Отрисовка профиля исследователя
-    document.getElementById('userName').textContent = user.name;
-    document.getElementById('userCode').textContent = `Код: ${user.code}`;
-    document.getElementById('userClass').textContent = user.class || 'Cadet Class';
-    document.getElementById('userAvatar').src = user.avatarUrl;
+    // Заполнение профиля исследователя
+    const setText = (id, text) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = text;
+    };
 
+    setText('userName', user.name);
+    setText('userCode', `Код: ${user.code}`);
+    setText('userClass', user.class || 'Cadet Class');
+
+    const avatarEl = document.getElementById('userAvatar');
+    if (avatarEl && user.avatarUrl) avatarEl.src = user.avatarUrl;
     // Дополнительный бейдж DeepSpace Member
     const deepSpaceBadge = document.getElementById('userDeepSpaceBadge');
     if (deepSpaceBadge) {
-        if (user.isDeepSpaceMember) {
-            deepSpaceBadge.classList.remove('d-none');
-        } else {
-            deepSpaceBadge.classList.add('d-none');
-        }
+        deepSpaceBadge.classList.toggle('d-none', !user.isDeepSpaceMember);
     }
 
     // Привязка кнопки выхода
@@ -44,14 +47,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (dimSwitch) dimSwitch.checked = !!user.cabinSettings.windowDimming;
     }
 
-    // Обработка переключения тумблеров через PATCH /users/:id
+
+    // Обработка переключения тумблеров через PATCH без перезагрузки страницы
     const toastElement = document.getElementById('telemetryToast');
-    const toast = new bootstrap.Toast(toastElement, { delay: 2500 });
+    const toast = toastElement ? new bootstrap.Toast(toastElement, { delay: 3000 }) : null;
     const toastMessage = document.getElementById('toastMessage');
 
     async function updateCabinSetting(settingKey, isChecked, labelName, inputElement) {
+        const currentSettings = user.cabinSettings || {};
         const updatedSettings = {
-            ...user.cabinSettings,
+            ...currentSettings,
             [settingKey]: isChecked
         };
 
@@ -64,9 +69,11 @@ document.addEventListener('DOMContentLoaded', async () => {
             user = updatedUser;
             window.auth.setCurrentUser(updatedUser);
 
-            const stateText = isChecked ? 'АКТИВИРОВАН' : 'ДЕАКТИВИРОВАН';
-            toastMessage.textContent = `${labelName}: статус изменен на [${stateText}] и сохранен в бортовой сети.`;
-            toast.show();
+            if (toast && toastMessage) {
+                const stateText = isChecked ? 'АКТИВИРОВАН' : 'ДЕАКТИВИРОВАН';
+                toastMessage.textContent = `${labelName}: статус изменен на [${stateText}]`;
+                toast.show();
+            }
         } catch (error) {
             // В случае сетевого сбоя возвращаем тумблер на место
             inputElement.checked = !isChecked;
@@ -74,19 +81,11 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    gravSwitch?.addEventListener('change', (e) => {
-        updateCabinSetting('gravity', e.target.checked, 'Режим гравитации', e.target);
-    });
+    gravSwitch?.addEventListener('change', (e) => updateCabinSetting('gravity', e.target.checked, 'Режим гравитации', e.target));
+    foodSwitch?.addEventListener('change', (e) => updateCabinSetting('hypoallergenicFood', e.target.checked, 'Гипоаллергенный рацион', e.target));
+    dimSwitch?.addEventListener('change', (e) => updateCabinSetting('windowDimming', e.target.checked, 'Затемнение иллюминатора', e.target));
 
-    foodSwitch?.addEventListener('change', (e) => {
-        updateCabinSetting('hypoallergenicFood', e.target.checked, 'Гипоаллергенный рацион', e.target);
-    });
-
-    dimSwitch?.addEventListener('change', (e) => {
-        updateCabinSetting('windowDimming', e.target.checked, 'Затемнение иллюминатора', e.target);
-    });
-
-    // Загрузка рейсов пользователя
+    // Загрузка билетов и журнала экспедиций
     const flightCard = document.getElementById('activeFlightCard');
     const noFlightsMessage = document.getElementById('noFlightsMessage');
     const tableBody = document.getElementById('bookingsTableBody');
@@ -110,30 +109,31 @@ document.addEventListener('DOMContentLoaded', async () => {
             return;
         }
 
-        // Берем последний актуальный рейс для большого талона
+        // Берем последний рейс
         const activeBooking = bookings[bookings.length - 1];
 
         if (flightCard) {
             flightCard.classList.remove('d-none');
             if (noFlightsMessage) noFlightsMessage.classList.add('d-none');
 
-            document.getElementById('flightCodeHeader').textContent = `Ближайший рейс // ${activeBooking.tourCode}`;
-            document.getElementById('flightStatusBadge').textContent = activeBooking.status || 'Подтвержден';
-            document.getElementById('flightOriginCode').textContent = activeBooking.origin || 'EAR';
-            document.getElementById('flightOriginName').textContent = activeBooking.originName || 'Земля (КК)';
-            document.getElementById('flightDestCode').textContent = activeBooking.destination || 'ENC';
-            document.getElementById('flightDestName').textContent = activeBooking.destinationName || 'База';
-            document.getElementById('flightCountdown').textContent = activeBooking.countdown || activeBooking.date;
-            document.getElementById('flightGate').textContent = activeBooking.gate || 'Шлюз A-12';
-            document.getElementById('flightCabin').textContent = activeBooking.cabin || 'Модуль 1';
+            setText('flightCodeHeader', `Ближайший рейс // ${activeBooking.tourCode || 'EXP'}`);
+            setText('flightStatusBadge', activeBooking.status || 'Подтвержден');
+            setText('flightOriginCode', activeBooking.origin || 'EAR');
+            setText('flightOriginName', activeBooking.originName || 'Земля (КК)');
+            setText('flightDestCode', activeBooking.destination || 'ORB');
+            setText('flightDestName', activeBooking.destinationName || activeBooking.route || 'Орбита');
+            setText('flightCountdown', activeBooking.countdown || activeBooking.date);
+            setText('flightGate', activeBooking.gate || 'A-12');
+            setText('flightCabin', activeBooking.cabin || 'Модуль 1');
 
             // Наполнение модального окна посадочного сертификата
-            document.getElementById('modalFlightTitle').textContent = `${activeBooking.origin} → ${activeBooking.destination}`;
-            document.getElementById('modalPassenger').textContent = user.name;
-            document.getElementById('modalUserId').textContent = user.code;
-            document.getElementById('modalGate').textContent = activeBooking.gate || 'Gateway A-12';
-            document.getElementById('modalCabin').textContent = activeBooking.cabin || 'Секция 4F';
-            document.getElementById('modalSerialNo').textContent = `SERIAL NO: ${activeBooking.serialNo || 'NT-2026-DEFAULT'}`;
+            setText('ticketModalLabel', `Посадочный сертификат // ${activeBooking.tourCode || 'EXP'}`);
+            setText('modalFlightTitle', `${activeBooking.origin || 'EAR'} → ${activeBooking.destination || 'ORB'}`);
+            setText('modalPassenger', user.name);
+            setText('modalUserId', user.code);
+            setText('modalGate', activeBooking.gate || 'Gateway A-12');
+            setText('modalCabin', activeBooking.cabin || 'Каюта 1-й категории');
+            setText('modalSerialNo', `SERIAL NO: ${activeBooking.serialNo || 'NT-DEFAULT'}`);
         }
 
         // Рендер таблицы бортового журнала
@@ -143,13 +143,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     <td class="py-3 text-main">
                         <div class="d-flex align-items-center gap-2">
                             <i class="bi bi-rocket-takeoff text-secondary"></i>
-                            <span>${b.route || (b.origin + ' → ' + b.destination)}</span>
+                            <span>${b.route || `${b.origin} → ${b.destination}`}</span>
                         </div>
                     </td>
                     <td class="py-3 text-muted-custom fs-7">${b.date}</td>
                     <td class="py-3 text-main fs-7">${b.ship || 'Nova Shuttle'}</td>
                     <td class="py-3 text-end">
-                        <span class="${b.statusBadge || 'badge-gold'} px-2 py-1 fs-7 rounded">${b.status || 'Оформлен'}</span>
+                        <span class="${b.statusBadge || 'badge-gold'} px-2 py-1 fs-7 rounded">${b.status || 'Ожидает старта'}</span>
                     </td>
                 </tr>
             `).join('');
