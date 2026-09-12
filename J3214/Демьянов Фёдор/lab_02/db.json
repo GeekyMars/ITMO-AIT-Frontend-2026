@@ -29,7 +29,7 @@
       "isDeepSpaceMember": false,
       "avatarUrl": "https://ui-avatars.com/api/?name=GeekyMars&background=1a1e29&color=c8d0db&size=96",
       "cabinSettings": {
-        "gravity": true,
+        "gravity": false,
         "hypoallergenicFood": true,
         "windowDimming": true
       },
