@@ -31,7 +31,7 @@ function updateThemeToggleUI(theme) {
         if (icon) {
             icon.className = isLight ? 'bi bi-sun-fill text-warning' : 'bi bi-moon-stars-fill text-main';
         }
-        const label = isLight ? 'Включить тёмную тему' : 'Включить светлую тему';
+        const label = isLight ? 'Активировать режим Eclipse (тёмный)' : 'Активировать режим Nova (светлый)';
         btn.setAttribute('aria-label', label);
         btn.setAttribute('title', label);
     });
@@ -41,9 +41,8 @@ function updateThemeToggleUI(theme) {
 const initialTheme = getPreferredTheme();
 setTheme(initialTheme, false);
 
-// Слушатель системной смены темы в ОС в реальном времени
+// Слушатель системной смены темы в ОС
 window.matchMedia('(prefers-color-scheme: light)').addEventListener('change', (e) => {
-    // Реагируем только если пользователь не переопределил тему вручную
     if (!localStorage.getItem(THEME_STORAGE_KEY)) {
         setTheme(e.matches ? 'light' : 'dark', false);
     }
