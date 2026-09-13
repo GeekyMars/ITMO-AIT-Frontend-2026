@@ -79,14 +79,13 @@ window.auth = {
         return createdUser;
     },
 
-    // Динамическое обновление навбара на любой странице
     // Динамическое переключение элементов навбара на любой странице
     initNavbar() {
         const user = this.getCurrentUser();
 
-        // 1. Ищем ссылки на кабинет (в списке меню и кнопку с аватаром)
+        // Ищем ссылки на кабинет
         const dashboardLinks = document.querySelectorAll('a[href*="dashboard.html"]');
-        // 2. Ищем ссылки на вход и регистрацию
+        // Ищем ссылки на вход и регистрацию
         const authLinks = document.querySelectorAll('a[href*="login.html"], a[href*="register.html"]');
 
         if (user) {
@@ -105,7 +104,10 @@ window.auth = {
                 profileBtn.classList.remove('d-none');
                 const avatar = profileBtn.querySelector('img');
                 const nameSpan = profileBtn.querySelector('span');
-                if (avatar) avatar.src = user.avatarUrl;
+                if (avatar) {
+                    avatar.src = user.avatarUrl;
+                    avatar.alt = `Аватар профиля: ${user.name}`;
+                }
                 if (nameSpan) nameSpan.textContent = user.name;
             }
         } else {

@@ -53,11 +53,9 @@ document.addEventListener('DOMContentLoaded', async () => {
         const displayData = data || planetsInfo['moon'];
 
         document.querySelectorAll('.planet-img').forEach(img => {
-            if (img.getAttribute('data-planet') === targetPlanet) {
-                img.classList.add('active');
-            } else {
-                img.classList.remove('active');
-            }
+            const isTarget = img.getAttribute('data-planet') === targetPlanet;
+            img.classList.toggle('active', isTarget);
+            img.setAttribute('aria-hidden', (!isTarget).toString());
         });
 
         document.getElementById('heroPlanetTitle').textContent = displayData.title;
@@ -78,20 +76,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     });
 
-    // Генерация HTML-разметки одной карточки
+    // Генерация HTML-разметки одной карточки с атрибутами доступности
     function renderTourCard(tour) {
         return `
             <div class="col mission-card-item" 
                  data-destination="${tour.destination}" 
                  data-budget="${tour.budget}" 
                  data-duration="${tour.duration}">
-                <div class="glass-panel h-100 p-4 d-flex flex-column justify-content-between">
+                <article class="glass-panel h-100 p-4 d-flex flex-column justify-content-between" aria-label="Экспедиция: ${tour.title}">
                     <div>
                         <div class="d-flex justify-content-between align-items-center mb-3">
                             <span class="${tour.badgeClass} px-2 py-1 fs-7 rounded">${tour.badge}</span>
-                            <span class="text-muted-custom fs-7">${tour.code}</span>
+                            <span class="text-muted-custom fs-7" aria-label="Шифр экспедиции: ${tour.code}">${tour.code}</span>
                         </div>
-                        <h4 class="text-main fs-5 mb-2">${tour.title}</h4>
+                        <h3 class="text-main fs-5 mb-2">${tour.title}</h3>
                         <p class="text-muted-custom fs-7 mb-4">${tour.shortDesc}</p>
 
                         <div class="border-top border-secondary border-opacity-25 pt-3 mb-4">
@@ -114,9 +112,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                             <span class="text-muted-custom fs-7">Стоимость</span>
                             <span class="fs-5 fw-bold text-main">${tour.price.toLocaleString('ru-RU')} $</span>
                         </div>
-                        <a href="tour.html?id=${tour.id}" class="btn btn-glass w-100 py-2 fs-7">Подробнее</a>
+                        <a href="tour.html?id=${tour.id}" class="btn btn-glass w-100 py-2 fs-7" aria-label="Подробнее об экспедиции ${tour.title}">Подробнее</a>
                     </div>
-                </div>
+                </article>
             </div>
         `;
     }
@@ -125,9 +123,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     async function loadMissions() {
         try {
             gridContainer.innerHTML = `
-                <div class="col-12 text-center py-5">
-                    <div class="spinner-border text-light mb-3" role="status"></div>
-                    <p class="text-muted-custom fs-7 letter-spacing-2 text-uppercase">Установка связи с базой данных...</p>
+                <div class="col-12 text-center py-5" role="status">
+                    <div class="spinner-border text-light mb-3" role="status">
+                        <span class="visually-hidden">Установка связи с базой данных...</span>
+                    </div>
+                    <p class="text-muted-custom fs-7 letter-spacing-2 text-uppercase" aria-hidden="true">Установка связи с базой данных...</p>
                 </div>
             `;
 
@@ -136,7 +136,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         } catch (error) {
             console.error('Ошибка загрузки туров:', error);
             gridContainer.innerHTML = `
-                <div class="col-12 text-center py-5">
+                <div class="col-12 text-center py-5" role="alert">
                     <p class="text-danger mb-2">Ошибка подключения к бортовой сети (json-server не отвечает).</p>
                     <p class="text-muted-custom fs-7">Убедитесь, что сервер запущен командой npm run server</p>
                 </div>
