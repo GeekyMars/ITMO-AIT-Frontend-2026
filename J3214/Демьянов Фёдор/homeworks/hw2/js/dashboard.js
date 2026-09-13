@@ -136,13 +136,13 @@ document.addEventListener('DOMContentLoaded', async () => {
             setText('modalSerialNo', `SERIAL NO: ${activeBooking.serialNo || 'NT-DEFAULT'}`);
         }
 
-        // Рендер таблицы бортового журнала
+        // Рендер таблицы бортового журнала с атрибутами доступности
         if (tableBody) {
             tableBody.innerHTML = bookings.map(b => `
                 <tr class="border-bottom border-secondary border-opacity-25">
                     <td class="py-3 text-main">
                         <div class="d-flex align-items-center gap-2">
-                            <i class="bi bi-rocket-takeoff text-secondary"></i>
+                            <i class="bi bi-rocket-takeoff text-secondary" aria-hidden="true"></i>
                             <span>${b.route || `${b.origin} → ${b.destination}`}</span>
                         </div>
                     </td>
