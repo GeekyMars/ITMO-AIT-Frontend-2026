@@ -4,35 +4,50 @@ document.addEventListener('DOMContentLoaded', async () => {
     const apodSpinner = document.getElementById('nasaApodSpinner');
     if (!apodContainer) return;
 
-    // Ключ Nasa API
-    const API_KEY = 'DEMO_KEY';
+    // Персональный ключ 
+    const API_KEY = 'P0idgW3S2na0dTo54cnyQO0QGj75cHfl0J3G8Wnk';
     const PRIMARY_URL = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}&thumbs=true`;
-    const FALLBACK_URL = 'https://corsproxy.io/?' + encodeURIComponent(`https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&thumbs=true`);
+    const FALLBACK_URL = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(PRIMARY_URL);
 
     let data = null;
 
-    try {
-        // Отправка сетевого запроса к стороннему серверу
-        let response = await fetch(PRIMARY_URL);
-
-        if (!response.ok) {
-            console.warn(`NASA API вернул статус ${response.status}. Переключение на резервный канал...`);
-            response = await fetch(FALLBACK_URL);
+    // Проверяем кэш сессии, чтобы не расходовать лимит API при перезагрузках Live Server
+    const cachedData = sessionStorage.getItem('nasa_apod_cache');
+    if (cachedData) {
+        try {
+            data = JSON.parse(cachedData);
+        } catch (e) {
+            sessionStorage.removeItem('nasa_apod_cache');
         }
-
-        // Десериализация полученного JSON-ответа
-        if (!response.ok) {
-            throw new Error(`Сбой внешнего шлюза: ${response.status}`);
-        }
-
-        data = await response.json();
-    } catch (error) {
-        console.warn('Внешний шлюз недоступен, активирован автономный режим:', error);
-    } finally {
-        // Скрытие анимации загрузки
-        if (apodSpinner) apodSpinner.classList.add('d-none');
     }
 
+    // Если данных в кэше нет - отправляем сетевой запрос
+    if (!data) {
+        try {
+            let response = await fetch(PRIMARY_URL);
+
+            if (!response.ok) {
+                console.warn(`NASA API вернул статус ${response.status}. Переключение на резервный канал...`);
+                response = await fetch(FALLBACK_URL);
+            }
+
+            // Десериализация полученного JSON-ответа
+            if (!response.ok) {
+                throw new Error(`Сбой внешнего шлюза: ${response.status}`);
+            }
+
+            data = await response.json();
+            // Сохраняем результат в кэш сессии
+            sessionStorage.setItem('nasa_apod_cache', JSON.stringify(data));
+        } catch (error) {
+            console.warn('Внешний шлюз недоступен, активирован автономный режим:', error);
+        }
+    }
+
+    // Скрытие анимации загрузки
+    if (apodSpinner) apodSpinner.classList.add('d-none');
+
+    // Рендеринг полученных данных
     if (data && (data.url || data.hdurl)) {
         let mediaHtml = '';
         const url = data.url || data.hdurl;
