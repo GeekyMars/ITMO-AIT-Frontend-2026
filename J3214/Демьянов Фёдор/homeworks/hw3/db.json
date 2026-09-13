@@ -39,6 +39,26 @@
         "suitFitting": 0
       },
       "id": 2
+    },
+    {
+      "name": "Кира",
+      "email": "sirotinakira@mail.ru",
+      "password": "123123123",
+      "code": "NT-3772-X",
+      "class": "Cadet Class",
+      "isDeepSpaceMember": false,
+      "avatarUrl": "https://ui-avatars.com/api/?name=%D0%9A%D0%B8%D1%80%D0%B0&background=1a1e29&color=c8d0db&size=96",
+      "cabinSettings": {
+        "gravity": true,
+        "hypoallergenicFood": true,
+        "windowDimming": true
+      },
+      "trainingProgress": {
+        "centrifuge": 0,
+        "docking": 0,
+        "suitFitting": 0
+      },
+      "id": 3
     }
   ],
   "tours": [
@@ -531,6 +551,27 @@
       "serialNo": "NT-7161-2026-EXP05ORB",
       "active": true,
       "id": 5
+    },
+    {
+      "userId": 3,
+      "tourId": "mars",
+      "tourCode": "EXP-04",
+      "route": "Земля → Марсианский",
+      "origin": "EAR",
+      "originName": "Земля (КК)",
+      "destination": "MARS",
+      "destinationName": "Марсианский транзит",
+      "date": "18 сентября 2027",
+      "countdown": "30 дн. 10:00",
+      "ship": "Ares Deep Voyager",
+      "gate": "Gateway A-12",
+      "cabin": "Каюта 1-й категории",
+      "status": "Ожидает старта",
+      "statusBadge": "badge-gold",
+      "totalPrice": 9100000,
+      "serialNo": "NT-5339-2026-EXP04MARS",
+      "active": true,
+      "id": 6
     }
   ]
 }

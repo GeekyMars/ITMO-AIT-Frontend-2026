@@ -27,6 +27,12 @@
     --glow-gold: 0 0 25px rgba(223, 177, 91, 0.3);
     --glow-blue: 0 0 25px rgba(44, 74, 117, 0.25);
 
+    /* Шкалы нормативов */
+    --progress-track: rgba(255, 255, 255, 0.1);
+    --progress-bar-1: linear-gradient(90deg, #0284c7, #38bdf8);
+    --progress-bar-2: linear-gradient(90deg, #2563eb, #60a5fa);
+    --progress-bar-3: linear-gradient(90deg, #1d4ed8, #38bdf8);
+
     /* Элементы форм, таблиц и системные иконки */
     --input-border: rgba(255, 255, 255, 0.2);
     --table-border: rgba(255, 255, 255, 0.08);
@@ -66,6 +72,12 @@
     --glow-gold: 0 4px 15px rgba(158, 108, 27, 0.15);
     --glow-blue: 0 4px 15px rgba(32, 84, 147, 0.15);
 
+    /* Шкалы нормативов */
+    --progress-track: rgba(15, 20, 28, 0.09);
+    --progress-bar-1: linear-gradient(90deg, #0284c7, #0ea5e9);
+    --progress-bar-2: linear-gradient(90deg, #1d4ed8, #3b82f6);
+    --progress-bar-3: linear-gradient(90deg, #1e3a8a, #2563eb);
+
     /* Элементы управления */
     --input-border: rgba(15, 20, 28, 0.25);
     --table-border: rgba(15, 20, 28, 0.08);
@@ -99,6 +111,10 @@
         --glow-blue: 0 4px 15px rgba(32, 84, 147, 0.15);
         --input-border: rgba(15, 20, 28, 0.25);
         --table-border: rgba(15, 20, 28, 0.08);
+        --progress-track: rgba(15, 20, 28, 0.09);
+        --progress-bar-1: linear-gradient(90deg, #0284c7, #0ea5e9);
+        --progress-bar-2: linear-gradient(90deg, #1d4ed8, #3b82f6);
+        --progress-bar-3: linear-gradient(90deg, #1e3a8a, #2563eb);
         --switch-bg: rgba(15, 20, 28, 0.2);
         --carousel-caption-bg: rgba(255, 255, 255, 0.85);
         --carousel-caption-border: rgba(255, 255, 255, 0.5);
@@ -484,6 +500,29 @@ input[type="date"].glass-input::-webkit-calendar-picker-indicator {
 .form-switch .form-check-input:checked {
     background-color: var(--accent-blue-light);
     border-color: var(--accent-blue-light);
+}
+
+/* Дорожка прогресс-бара */
+.progress {
+    background-color: var(--progress-track) !important;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+/* Оттенки синего для нормативов */
+.progress-bar-blue-1 {
+    background: var(--progress-bar-1) !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.35);
+}
+
+.progress-bar-blue-2 {
+    background: var(--progress-bar-2) !important;
+    box-shadow: 0 0 10px rgba(96, 165, 250, 0.35);
+}
+
+.progress-bar-blue-3 {
+    background: var(--progress-bar-3) !important;
+    box-shadow: 0 0 10px rgba(37, 99, 235, 0.35);
 }
 
 /* Лаконичная кнопка профиля в навбаре */
