@@ -19,9 +19,9 @@
     <!-- Кнопка возврата -->
     <div class="position-absolute top-0 start-0 p-4 z-3">
         <a href="index.html" class="text-decoration-none text-muted-custom d-flex align-items-center gap-2"
-            style="opacity: 0.85;">
+            style="opacity: 0.85;" aria-label="Вернуться на главную страницу">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
-                stroke-linecap="round" stroke-linejoin="round">
+                stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
                 <path d="M19 12H5M12 19l-7-7 7-7" />
             </svg>
             <span class="letter-spacing-2 text-uppercase fs-7">На главную</span>
@@ -33,29 +33,33 @@
 
             <div class="text-center mb-5">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" class="mb-3"
-                    xmlns="http://www.w3.org/2000/svg">
+                    xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
                     <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1" />
                     <path d="M12 1 C12 8 16 12 23 12 C16 12 12 16 12 23 C12 16 8 12 1 12 C8 12 12 8 12 1 Z"
                         fill="white" />
                 </svg>
-                <h2 class="fw-bold mb-1 letter-spacing-2">ВХОД</h2>
+                <h1 class="fw-bold mb-1 letter-spacing-2 fs-2">ВХОД</h1>
                 <p class="text-muted-custom fs-7 letter-spacing-2 text-uppercase">Терминал авторизации</p>
             </div>
 
-            <!-- Форма с отключенной браузерной валидацией novalidate -->
-            <form id="loginForm" class="needs-validation" novalidate>
+            <!-- Форма входа -->
+            <form id="loginForm" class="needs-validation" novalidate aria-label="Форма авторизации исследователя">
                 <div class="mb-4">
                     <label for="email" class="form-label">Бортовой Email</label>
                     <input type="email" class="form-control glass-input shadow-none" id="email"
-                        placeholder="commander@novatransit.com" required>
-                    <div class="invalid-feedback fs-7">Укажите корректный адрес электронной почты.</div>
+                        placeholder="commander@novatransit.com" required aria-required="true"
+                        aria-describedby="emailFeedback">
+                    <div class="invalid-feedback fs-7" id="emailFeedback">Укажите корректный адрес электронной почты.
+                    </div>
                 </div>
 
                 <div class="mb-4">
                     <label for="password" class="form-label">Ключ доступа (Пароль)</label>
                     <input type="password" class="form-control glass-input shadow-none" id="password"
-                        placeholder="••••••••" required minlength="6">
-                    <div class="invalid-feedback fs-7">Пароль должен содержать не менее 6 символов.</div>
+                        placeholder="••••••••" required minlength="6" aria-required="true"
+                        aria-describedby="passwordFeedback">
+                    <div class="invalid-feedback fs-7" id="passwordFeedback">Пароль должен содержать не менее 6
+                        символов.</div>
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center mb-5">
