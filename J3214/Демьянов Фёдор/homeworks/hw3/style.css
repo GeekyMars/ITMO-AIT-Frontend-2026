@@ -1,7 +1,5 @@
 :root {
-    /* ==========================================================================
-       Базовая палитра (Тёмная тема: Deep Space)
-       ========================================================================== */
+    /* Базовая палитра (Тёмная тема: Deep Space) */
     --bg-dark: #090a10;
     --bg-surface: #11141d;
     --bg-overlay: linear-gradient(rgba(9, 10, 16, 0.92), rgba(9, 10, 16, 0.96));
@@ -33,14 +31,14 @@
     --input-border: rgba(255, 255, 255, 0.2);
     --table-border: rgba(255, 255, 255, 0.08);
     --switch-bg: rgba(255, 255, 255, 0.15);
+    --carousel-caption-bg: rgba(9, 10, 16, 0.75);
+    --carousel-caption-border: rgba(255, 255, 255, 0.12);
     --calendar-invert: 1;
     --select-chevron: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23ffffff' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
     --toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
 }
 
-/* ==========================================================================
-   Светлая тема: Orbital Station
-   ========================================================================== */
+/* Светлая тема: Orbital Station */
 [data-theme="light"] {
     --bg-dark: #f4f6fa;
     --bg-surface: #ffffff;
@@ -72,6 +70,8 @@
     --input-border: rgba(15, 20, 28, 0.25);
     --table-border: rgba(15, 20, 28, 0.08);
     --switch-bg: rgba(15, 20, 28, 0.2);
+    --carousel-caption-bg: rgba(255, 255, 255, 0.85);
+    --carousel-caption-border: rgba(255, 255, 255, 0.5);
     --calendar-invert: 0;
     --select-chevron: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230f141c' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
     --toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2815, 20, 28, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -100,6 +100,8 @@
         --input-border: rgba(15, 20, 28, 0.25);
         --table-border: rgba(15, 20, 28, 0.08);
         --switch-bg: rgba(15, 20, 28, 0.2);
+        --carousel-caption-bg: rgba(255, 255, 255, 0.85);
+        --carousel-caption-border: rgba(255, 255, 255, 0.5);
         --calendar-invert: 0;
         --select-chevron: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%230f141c' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
         --toggler-icon: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2815, 20, 28, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
@@ -303,6 +305,16 @@ h6 {
     border-radius: 8px;
     box-shadow: var(--card-shadow);
     transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Адаптивная стеклянная плашка подписи в карусели */
+.carousel-caption-glass {
+    background: var(--carousel-caption-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--carousel-caption-border);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+    transition: background 0.3s ease, border-color 0.3s ease;
 }
 
 #searchPanel {
