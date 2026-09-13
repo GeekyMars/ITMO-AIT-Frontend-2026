@@ -26,14 +26,11 @@
     <!-- Навбар -->
     <nav class="navbar navbar-expand-lg sticky-top glass-navbar" aria-label="Основная навигация">
         <div class="container-fluid custom-container px-4 px-md-5">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html" aria-label="NovaTransit Главная">
-                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                    aria-hidden="true" focusable="false">
-                    <circle cx="12" cy="12" r="11" stroke="white" stroke-width="1" />
-                    <path d="M12 1 C12 8 16 12 23 12 C16 12 12 16 12 23 C12 16 8 12 1 12 C8 12 12 8 12 1 Z"
-                        fill="white" />
+            <a class="navbar-brand d-flex align-items-center gap-2 fw-bold letter-spacing-2" href="index.html">
+                <svg class="icon icon-logo" aria-hidden="true" focusable="false">
+                    <use href="assets/images/sprite.svg#icon-logo"></use>
                 </svg>
-                <span class="fw-bold ms-2">Nova</span><span class="fw-light">Transit</span>
+                <span class="ms-1"><span class="fw-bold">Nova</span><span class="fw-light">Transit</span></span>
             </a>
             <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -71,9 +68,12 @@
         <div class="container-fluid custom-container px-4 px-md-5">
 
             <div class="mb-4">
-                <a href="index.html#catalog"
-                    class="text-decoration-none text-muted-custom fs-7 letter-spacing-2 text-uppercase d-inline-flex align-items-center gap-2">
-                    <i class="bi bi-arrow-left" aria-hidden="true"></i> Вернуться к реестру миссий
+                <a href="index.html"
+                    class="nav-link px-0 d-inline-flex align-items-center gap-2 letter-spacing-2 text-uppercase mb-4 fs-7">
+                    <svg class="icon icon-sm" aria-hidden="true" focusable="false">
+                        <use href="assets/images/sprite.svg#icon-arrow-left"></use>
+                    </svg>
+                    Вернуться к реестру миссий
                 </a>
             </div>
 
@@ -224,14 +224,30 @@
                             <h2 id="includedHeading" class="text-main fs-7 text-uppercase letter-spacing-2 mb-3">В
                                 стоимость включено</h2>
                             <ul class="list-unstyled mb-0 fs-7 text-muted-custom">
-                                <li class="mb-2"><i class="bi bi-check2 text-main me-2" aria-hidden="true"></i>
-                                    Комплексный предполетный тренинг</li>
-                                <li class="mb-2"><i class="bi bi-check2 text-main me-2" aria-hidden="true"></i>
-                                    Персональный кастомизированный скафандр</li>
-                                <li class="mb-2"><i class="bi bi-check2 text-main me-2" aria-hidden="true"></i>
-                                    Размещение в каюте с индивидуальным иллюминатором</li>
-                                <li><i class="bi bi-check2 text-main me-2" aria-hidden="true"></i> Страховой полис
-                                    аэрокосмического риска</li>
+                                <li class="mb-2 d-flex align-items-center gap-2">
+                                    <svg class="icon text-main" aria-hidden="true" focusable="false">
+                                        <use href="assets/images/sprite.svg#icon-check"></use>
+                                    </svg>
+                                    <span>Комплексный предполетный тренинг</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center gap-2">
+                                    <svg class="icon text-main" aria-hidden="true" focusable="false">
+                                        <use href="assets/images/sprite.svg#icon-check"></use>
+                                    </svg>
+                                    <span>Персональный кастомизированный скафандр</span>
+                                </li>
+                                <li class="mb-2 d-flex align-items-center gap-2">
+                                    <svg class="icon text-main" aria-hidden="true" focusable="false">
+                                        <use href="assets/images/sprite.svg#icon-check"></use>
+                                    </svg>
+                                    <span>Размещение в каюте с индивидуальным иллюминатором</span>
+                                </li>
+                                <li class="d-flex align-items-center gap-2">
+                                    <svg class="icon text-main" aria-hidden="true" focusable="false">
+                                        <use href="assets/images/sprite.svg#icon-check"></use>
+                                    </svg>
+                                    <span>Страховой полис аэрокосмического риска</span>
+                                </li>
                             </ul>
                         </section>
                     </div>

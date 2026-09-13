@@ -25,12 +25,15 @@ function setTheme(theme, save = true) {
 function updateThemeToggleUI(theme) {
     const toggleBtns = document.querySelectorAll('.theme-toggle-btn');
     const isLight = theme === 'light';
-
     toggleBtns.forEach(btn => {
-        const icon = btn.querySelector('i');
-        if (icon) {
-            icon.className = isLight ? 'bi bi-sun-fill text-warning' : 'bi bi-moon-stars-fill text-main';
-        }
+        const symbolId = isLight ? '#icon-sun' : '#icon-moon';
+        const iconColorClass = isLight ? 'text-warning' : 'text-main';
+
+        btn.innerHTML = `
+            <svg class="icon ${iconColorClass}" aria-hidden="true" focusable="false">
+                <use href="assets/images/sprite.svg${symbolId}"></use>
+            </svg>
+        `;
         const label = isLight ? 'Активировать режим Eclipse (тёмный)' : 'Активировать режим Nova (светлый)';
         btn.setAttribute('aria-label', label);
         btn.setAttribute('title', label);
