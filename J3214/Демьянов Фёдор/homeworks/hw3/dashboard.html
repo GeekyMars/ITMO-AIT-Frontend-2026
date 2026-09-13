@@ -14,6 +14,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <!-- Стили проекта -->
     <link rel="stylesheet" href="style.css">
+    <!-- Инициализация темы до рендеринга DOM -->
+    <script src="js/theme.js"></script>
 </head>
 
 <body>
@@ -62,8 +64,13 @@
                             alt="Аватар профиля" width="24" height="24" class="rounded-circle">
                         <span class="d-none d-sm-inline">John Doe</span>
                     </a>
+                    <!-- Тумблер темы Nova / Eclipse -->
+                    <button type="button" class="theme-toggle-btn shadow-none ms-1" aria-label="Сменить тему">
+                        <i class="bi bi-moon-stars-fill"></i>
+                    </button>
                 </div>
             </div>
+        </div>
         </div>
     </nav>
 
