@@ -45,7 +45,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (desc) desc.textContent = slide.desc;
     });
 
-    // Наполнение таймлайна полета
+    // Наполнение таймлайна полета с атрибутами доступности
     const timelineContainer = document.getElementById('timelineContainer');
     timelineContainer.innerHTML = '';
     currentTour.timeline.forEach((step, idx) => {
@@ -54,8 +54,8 @@ document.addEventListener('DOMContentLoaded', async () => {
         const dotSize = isLast ? '10px' : '8px';
         timelineContainer.innerHTML += `
             <div class="position-relative ${isLast ? '' : 'mb-4'}">
-                <i class="bi bi-circle-fill ${dotClass} position-absolute top-0 start-0 translate-middle" style="font-size: ${dotSize};"></i>
-                <h6 class="text-main mb-1">${step.time} // ${step.title}</h6>
+                <i class="bi bi-circle-fill ${dotClass} position-absolute top-0 start-0 translate-middle" style="font-size: ${dotSize};" aria-hidden="true"></i>
+                <h3 class="text-main fs-6 mb-1">${step.time} // ${step.title}</h3>
                 <p class="text-muted-custom fs-7 mb-0">${step.desc}</p>
             </div>
         `;
