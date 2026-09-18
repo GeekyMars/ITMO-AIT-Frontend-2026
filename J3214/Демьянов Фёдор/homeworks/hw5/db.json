@@ -1,0 +1,22 @@
+{
+  "notes": [
+    {
+      "id": 1,
+      "name": "todo 1",
+      "text": "bla bla",
+      "userId": 1
+    },
+    {
+      "id": 2,
+      "name": "123",
+      "text": "test",
+      "userId": 1
+    },
+    {
+      "name": "test note",
+      "text": "раз два три ",
+      "userId": 1,
+      "id": 3
+    }
+  ]
+}
