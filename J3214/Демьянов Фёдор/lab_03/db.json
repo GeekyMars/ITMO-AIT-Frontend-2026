@@ -29,14 +29,14 @@
       "isDeepSpaceMember": false,
       "avatarUrl": "https://ui-avatars.com/api/?name=GeekyMars&background=1a1e29&color=c8d0db&size=96",
       "cabinSettings": {
-        "gravity": false,
-        "hypoallergenicFood": true,
+        "gravity": true,
+        "hypoallergenicFood": false,
         "windowDimming": true
       },
       "trainingProgress": {
-        "centrifuge": 0,
-        "docking": 0,
-        "suitFitting": 0
+        "centrifuge": 55,
+        "docking": 99,
+        "suitFitting": 20
       },
       "id": 2
     },
@@ -54,11 +54,31 @@
         "windowDimming": true
       },
       "trainingProgress": {
+        "centrifuge": 30,
+        "docking": 55,
+        "suitFitting": 76
+      },
+      "id": 3
+    },
+    {
+      "name": "Stasik",
+      "email": "stasik@gmail.com",
+      "password": "123123123",
+      "code": "NT-6674-X",
+      "class": "Cadet Class",
+      "isDeepSpaceMember": false,
+      "avatarUrl": "https://ui-avatars.com/api/?name=Stasik&background=1a1e29&color=c8d0db&size=96",
+      "cabinSettings": {
+        "gravity": true,
+        "hypoallergenicFood": false,
+        "windowDimming": false
+      },
+      "trainingProgress": {
         "centrifuge": 0,
         "docking": 0,
         "suitFitting": 0
       },
-      "id": 3
+      "id": 4
     }
   ],
   "tours": [

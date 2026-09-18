@@ -131,7 +131,7 @@ body {
     font-weight: 300;
     overflow-x: hidden;
     line-height: 1.6;
-    background-image: var(--bg-overlay), url('assets/images/background.png');
+    background-image: var(--bg-overlay), url('/assets/images/background.png');
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
