@@ -2,8 +2,8 @@
   <nav class="navbar navbar-expand-lg sticky-top glass-navbar" aria-label="Основная навигация">
     <div class="container-fluid custom-container px-4 px-md-5">
       <router-link class="navbar-brand d-flex align-items-center gap-2 fw-bold letter-spacing-2" to="/">
-        <svg class="icon icon-logo" width="28" height="28" aria-hidden="true" focusable="false">
-          <use :href="'/assets/images/sprite.svg#icon-logo'"></use>
+        <svg class="icon icon-logo" aria-hidden="true" focusable="false">
+          <use href="#icon-logo"></use>
         </svg>
         <span class="ms-1"><span class="fw-bold">Nova</span><span class="fw-light">Transit</span></span>
       </router-link>
